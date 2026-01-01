@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="KROUMA FAMILY Dashboard - View today's meals and shopping list">
+    
+    <title>Dashboard - KROUMA FAMILY</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🏠%3C/text%3E%3C/svg%3E">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Karla:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="dashboard-page">
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="header-left">
+                <div class="logo-small">
+                    <i class="fas fa-home"></i>
+                </div>
+                <h1 class="brand-name-small">KROUMA FAMILY</h1>
+            </div>
+            <div class="header-right">
+                <button type="button" class="btn-icon" id="themeToggle" title="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div class="user-menu">
+                    <button type="button" class="user-avatar" id="userMenuBtn">
+                        <span id="userInitials">KF</span>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="dropdown-header">
+                            <p class="user-name-display" id="userNameDisplay">User</p>
+                            <small class="user-role">Family Member</small>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <button type="button" class="dropdown-item" id="logoutBtn">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+        <div class="dashboard-container">
+            <!-- Welcome Section -->
+            <section class="welcome-section">
+                <div class="welcome-content">
+                    <h2 class="welcome-title">Welcome back, <span id="welcomeName">Family</span>! 👋</h2>
+                    <p class="welcome-subtitle">Here's what's planned for today</p>
+                </div>
+                <div class="date-time-display">
+                    <div class="current-date" id="currentDate">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span></span>
+                    </div>
+                    <div class="current-time" id="currentTime"></div>
+                </div>
+            </section>
+
+            <!-- Today's Meals Section -->
+            <section class="meals-section">
+                <div class="section-header">
+                    <h3 class="section-title">
+                        <i class="fas fa-utensils"></i>
+                        Today's Meals
+                    </h3>
+                </div>
+                <div class="meals-grid" id="mealsGrid">
+                    <!-- Breakfast -->
+                    <div class="meal-card" data-meal="breakfast">
+                        <div class="meal-icon breakfast-icon">
+                            <i class="fas fa-mug-hot"></i>
+                        </div>
+                        <div class="meal-time" id="breakfastTime">08:00 AM</div>
+                        <h4 class="meal-name">Breakfast</h4>
+                        <p class="meal-description" id="breakfastDescription">
+                            Loading...
+                        </p>
+                    </div>
+
+                    <!-- Lunch -->
+                    <div class="meal-card" data-meal="lunch">
+                        <div class="meal-icon lunch-icon">
+                            <i class="fas fa-sun"></i>
+                        </div>
+                        <div class="meal-time" id="lunchTime">12:30 PM</div>
+                        <h4 class="meal-name">Lunch</h4>
+                        <p class="meal-description" id="lunchDescription">
+                            Loading...
+                        </p>
+                    </div>
+
+                    <!-- Dinner -->
+                    <div class="meal-card" data-meal="dinner">
+                        <div class="meal-icon dinner-icon">
+                            <i class="fas fa-moon"></i>
+                        </div>
+                        <div class="meal-time" id="dinnerTime">07:00 PM</div>
+                        <h4 class="meal-name">Dinner</h4>
+                        <p class="meal-description" id="dinnerDescription">
+                            Loading...
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Shopping List Section -->
+            <section class="shopping-section">
+                <div class="section-header">
+                    <h3 class="section-title">
+                        <i class="fas fa-shopping-basket"></i>
+                        Shopping List
+                    </h3>
+                    <button type="button" class="btn-icon" id="printShoppingList" title="Print shopping list">
+                        <i class="fas fa-print"></i>
+                    </button>
+                </div>
+
+                <div class="shopping-filters">
+                    <button type="button" class="filter-btn active" data-filter="all">
+                        All Items
+                    </button>
+                    <button type="button" class="filter-btn" data-filter="groceries">
+                        <i class="fas fa-carrot"></i>
+                        Groceries
+                    </button>
+                    <button type="button" class="filter-btn" data-filter="household">
+                        <i class="fas fa-home"></i>
+                        Household
+                    </button>
+                    <button type="button" class="filter-btn" data-filter="personal">
+                        <i class="fas fa-user"></i>
+                        Personal
+                    </button>
+                </div>
+
+                <div class="shopping-list" id="shoppingList">
+                    <!-- Shopping items will be loaded here -->
+                </div>
+
+                <div class="empty-state" id="emptyShoppingList" style="display: none;">
+                    <i class="fas fa-check-circle"></i>
+                    <p>All caught up! No items on the shopping list.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <p>&copy; 2026 KROUMA FAMILY. Made with <i class="fas fa-heart"></i> for our family</p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <!-- JavaScript -->
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

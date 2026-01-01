@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="KROUMA FAMILY Admin Dashboard">
+    
+    <title>Admin Dashboard - KROUMA FAMILY</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🏠%3C/text%3E%3C/svg%3E">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Karla:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="admin-page">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar" id="adminSidebar">
+        <div class="sidebar-header">
+            <div class="logo-small">
+                <i class="fas fa-home"></i>
+            </div>
+            <div class="sidebar-brand">
+                <h2>KROUMA FAMILY</h2>
+                <span class="admin-badge">Admin</span>
+            </div>
+            <button type="button" class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="#dashboard" class="nav-item active" data-section="dashboard">
+                <i class="fas fa-chart-line"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="#meals" class="nav-item" data-section="meals">
+                <i class="fas fa-utensils"></i>
+                <span>Manage Meals</span>
+            </a>
+            <a href="#shopping" class="nav-item" data-section="shopping">
+                <i class="fas fa-shopping-basket"></i>
+                <span>Shopping List</span>
+            </a>
+            <a href="#users" class="nav-item" data-section="users">
+                <i class="fas fa-users"></i>
+                <span>Family Members</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <button type="button" class="btn-logout" id="adminLogoutBtn">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+        <!-- Header -->
+        <header class="admin-header">
+            <div class="header-container">
+                <h1 class="page-title" id="pageTitle">Dashboard</h1>
+                <div class="header-actions">
+                    <button type="button" class="btn-icon" id="themeToggle" title="Toggle theme">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button type="button" class="btn-icon" id="exportDataBtn" title="Export data">
+                        <i class="fas fa-download"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Content Sections -->
+        <div class="admin-content">
+            <!-- Dashboard Section -->
+            <section id="dashboardSection" class="content-section active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3 class="stat-value" id="totalUsers">0</h3>
+                            <p class="stat-label">Family Members</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3 class="stat-value" id="todayMeals">3</h3>
+                            <p class="stat-label">Meals Today</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                            <i class="fas fa-shopping-basket"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3 class="stat-value" id="shoppingItems">0</h3>
+                            <p class="stat-label">Shopping Items</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3 class="stat-value" id="completionRate">0%</h3>
+                            <p class="stat-label">List Completion</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <h3 class="chart-title">Shopping List Activity</h3>
+                        <canvas id="shoppingChart"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h3 class="chart-title">User Activity</h3>
+                        <canvas id="activityChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Meals Management Section -->
+            <section id="mealsSection" class="content-section">
+                <div class="section-actions">
+                    <button type="button" class="btn btn-primary" id="addMealBtn">
+                        <i class="fas fa-plus"></i>
+                        Update Today's Meals
+                    </button>
+                </div>
+
+                <div class="meals-management-grid">
+                    <!-- Breakfast Card -->
+                    <div class="admin-meal-card">
+                        <div class="meal-card-header">
+                            <div class="meal-icon breakfast-icon">
+                                <i class="fas fa-mug-hot"></i>
+                            </div>
+                            <h4>Breakfast</h4>
+                        </div>
+                        <form class="meal-form" data-meal="breakfast">
+                            <div class="form-group">
+                                <label>Time</label>
+                                <input type="time" id="breakfastTimeInput" value="08:00">
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea id="breakfastDescInput" rows="3" placeholder="What's for breakfast?"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-secondary btn-sm">
+                                <i class="fas fa-save"></i>
+                                Save
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Lunch Card -->
+                    <div class="admin-meal-card">
+                        <div class="meal-card-header">
+                            <div class="meal-icon lunch-icon">
+                                <i class="fas fa-sun"></i>
+                            </div>
+                            <h4>Lunch</h4>
+                        </div>
+                        <form class="meal-form" data-meal="lunch">
+                            <div class="form-group">
+                                <label>Time</label>
+                                <input type="time" id="lunchTimeInput" value="12:30">
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea id="lunchDescInput" rows="3" placeholder="What's for lunch?"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-secondary btn-sm">
+                                <i class="fas fa-save"></i>
+                                Save
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Dinner Card -->
+                    <div class="admin-meal-card">
+                        <div class="meal-card-header">
+                            <div class="meal-icon dinner-icon">
+                                <i class="fas fa-moon"></i>
+                            </div>
+                            <h4>Dinner</h4>
+                        </div>
+                        <form class="meal-form" data-meal="dinner">
+                            <div class="form-group">
+                                <label>Time</label>
+                                <input type="time" id="dinnerTimeInput" value="19:00">
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea id="dinnerDescInput" rows="3" placeholder="What's for dinner?"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-secondary btn-sm">
+                                <i class="fas fa-save"></i>
+                                Save
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Shopping List Management Section -->
+            <section id="shoppingSection" class="content-section">
+                <div class="section-actions">
+                    <button type="button" class="btn btn-primary" id="addItemBtn">
+                        <i class="fas fa-plus"></i>
+                        Add Item
+                    </button>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchItems" placeholder="Search items...">
+                    </div>
+                </div>
+
+                <div class="admin-shopping-list" id="adminShoppingList">
+                    <!-- Items will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Users Management Section -->
+            <section id="usersSection" class="content-section">
+                <div class="users-table-wrapper">
+                    <table class="users-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Last Login</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <!-- Users will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Add/Edit Shopping Item Modal -->
+    <div id="itemModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="itemModalTitle">Add Shopping Item</h3>
+                <button type="button" class="close-modal" id="closeItemModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="itemForm" class="modal-form">
+                <input type="hidden" id="itemId">
+                <div class="form-group">
+                    <label for="itemName">Item Name *</label>
+                    <input type="text" id="itemName" required placeholder="e.g., Milk, Bread">
+                </div>
+                <div class="form-group">
+                    <label for="itemCategory">Category *</label>
+                    <select id="itemCategory" required>
+                        <option value="">Select category</option>
+                        <option value="groceries">Groceries</option>
+                        <option value="household">Household</option>
+                        <option value="personal">Personal Care</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="itemPriority">
+                        <span class="checkmark"></span>
+                        <span class="checkbox-label">Mark as priority</span>
+                    </label>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelItemBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i>
+                        Save Item
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <!-- JavaScript -->
+    <script src="js/admin.js"></script>
+</body>
+</html>
